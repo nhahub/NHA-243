@@ -17,6 +17,16 @@ A modern e-commerce platform built with Node.js, Express, TypeScript, and MongoD
 - **Database**: MongoDB with Mongoose ODM
 - **Authentication**: JWT, bcrypt
 - **Development**: Docker, Docker Compose
+- **CI/CD**: Jenkins
+
+## CI/CD Pipeline
+
+This project uses Jenkins for Continuous Integration and Continuous Deployment. The pipeline is defined in `Jenkinsfile` and includes the following stages:
+
+1.  **Install Dependencies**: Installs project dependencies using `npm install`.
+2.  **Build**: Compiles the TypeScript code using `npm run build`.
+3.  **Test**: Runs automated tests (currently a placeholder).
+4.  **Docker Build**: Builds the Docker image for the application.
 
 ## Getting Started
 
