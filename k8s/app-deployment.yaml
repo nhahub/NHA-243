@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ecommerce-app
+  labels:
+    app: ecommerce-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: ecommerce-app
+  template:
+    metadata:
+      labels:
+        app: ecommerce-app
+    spec:
+      containers:
+      - name: ecommerce-app
+        # NOTE: You will need to build this image and push it to a registry
+        # or use a local registry if using Minikube/Kind.
+        image: ecommerce-app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000 # App internal port (from config if not overridden, usually 3000 default)
+        env:
+        - name: NODE_ENV
+          value: development
+        - name: MONGO_URI
+          value: mongodb://mongodb:27017/ecommerce
+        - name: PORT
+          value: "3000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ecommerce-app
+spec:
+  type: NodePort # Or ClusterIP if using Ingress
+  selector:
+    app: ecommerce-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+      nodePort: 30001
